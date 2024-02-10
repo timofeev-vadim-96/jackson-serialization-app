@@ -19,18 +19,18 @@ public class Converter {
     /**
      * Серриализация объекта в файл
      */
-    public void saveStudentToFile(String fileName, Student student) {
+    public <T> void saveStudentToFile(String fileName, T object) {
         try {
             if (fileName.endsWith(".json")) {
                 objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-                objectMapper.writeValue(new File(fileName), student);
+                objectMapper.writeValue(new File(fileName), object);
             } else if (fileName.endsWith(".bin")) {
                 try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
-                    outputStream.writeObject(student);
+                    outputStream.writeObject(object);
                 }
             } else if (fileName.endsWith(".xml")) {
                 xmlMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-                xmlMapper.writeValue(new File(fileName), student);
+                xmlMapper.writeValue(new File(fileName), object);
             }
             else throw new IncorrectFileType();
         } catch (IOException e) {
@@ -41,25 +41,24 @@ public class Converter {
     /**
      * Дессериализация объекта из файла
      */
-    public Student loadStudentFromFile(String fileName) {
-        Student student = new Student();
+    public <T> T loadStudentFromFile(String fileName, Class<T> clazz) {
         File file = new File(fileName);
         if (file.exists()) {
             try {
                 if (fileName.endsWith(".json")) {
-                    student = objectMapper.readValue(file, Student.class);
+                    return objectMapper.readValue(file, clazz);
                 } else if (fileName.endsWith(".bin")) {
                     try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-                        student = (Student) inputStream.readObject();
+                        return (T) inputStream.readObject();
                     }
                 } else if (fileName.endsWith(".xml")) {
-                    student = xmlMapper.readValue(file, Student.class);
+                    return xmlMapper.readValue(file, clazz);
                 }
                 else throw new IncorrectFileType();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
-        return student;
+        return null;
     }
 }

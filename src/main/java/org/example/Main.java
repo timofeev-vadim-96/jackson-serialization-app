@@ -20,7 +20,7 @@ public class Main {
         Arrays.stream(files).forEach(file -> converter.saveStudentToFile(file, student));
 
         Arrays.stream(files).forEach(file -> {
-            System.out.printf("Returned from %s: %s\n", file, converter.loadStudentFromFile(file));
+            System.out.printf("Returned from %s: %s\n", file, converter.loadStudentFromFile(file, Student.class));
         });
     }
 }

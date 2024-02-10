@@ -4,9 +4,9 @@ target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
-!Student.java
 target
 student*
+!Student.java
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml

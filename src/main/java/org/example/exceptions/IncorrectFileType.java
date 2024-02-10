@@ -1,8 +1,8 @@
 package org.example.exceptions;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class IncorrectFileType extends FileNotFoundException {
+public class IncorrectFileType extends IOException {
     public IncorrectFileType() {
         super("Unexpected file type");
     }
